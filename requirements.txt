@@ -1,0 +1,10 @@
+pytorch-lightning[extras]==2.1.0
+torchvision
+urllib3
+kornia
+overrides
+scipy
+opencv-python
+pandas
+Pillow
+piq
