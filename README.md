@@ -2,7 +2,7 @@
 
 This code is the official implementation of the paper "Efficicient posterior sampling for diverse super-resolution with HVAE prior" ([arxiv](https://arxiv.org/abs/2205.10347)).
 
-It trains an encoder on top a pretrained VDVAE model in order to perform super-resolution. Due to the probabilistic nature of VDVAE, it enable us to sample efficiently diverse solutions to the super-resolution problem.
+It trains an encoder on top a pretrained VDVAE model in order to perform super-resolution. Due to the probabilistic nature of VDVAE, it enables us to sample efficiently diverse solutions to the super-resolution problem.
 
 ## Setup
 Initiate a python virtual environemnt and install the necessary packages
