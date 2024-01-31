@@ -1,7 +1,8 @@
 # Efficicient posterior sampling for diverse super-resolution with HVAE prior
 
-This code is the official implementation of the paper.
-It implements a method to perform diverse image super-resolution by 
+This code is the official implementation of the paper "Efficicient posterior sampling for diverse super-resolution with HVAE prior" ([arxiv](https://arxiv.org/abs/2205.10347)).
+
+It trains an encoder on top a pretrained VDVAE model in order to perform super-resolution. Due to the probabilistic nature of VDVAE, it enable us to sample efficiently diverse solutions to the super-resolution problem.
 
 ## Setup
 Initiate a python virtual environemnt and install the necessary packages
@@ -48,12 +49,7 @@ python3 train.py  fit -c configs/ffhq256_x8_v0.yaml
 
 
 ## Test
-Download pretrained checkpoints:
-```
-mkdir checkpoints
-cd checkpoints
-
-```
+Pretrained checkpoints will be made available.
 
 
 For instance to test the x4 model: 
