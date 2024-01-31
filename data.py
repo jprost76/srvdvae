@@ -5,7 +5,6 @@ import torch.nn as nn
 from torch.utils.data import random_split, DataLoader, TensorDataset, Dataset
 import numpy as np
 import pytorch_lightning as pl
-#import lightning.pytorch as pl
 import kornia
 
 from LRHR_PKL_dataset import LRHR_PKLDataset

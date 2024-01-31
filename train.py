@@ -15,8 +15,8 @@ import pytorch_lightning as pl
 # from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 # from pytorch_lightning.loggers import TensorBoardLogger
 # from pytorch_lightning.callbacks import TQDMProgressBar
-from pytorch_lightning.utilities.cli import LightningCLI, CALLBACK_REGISTRY, MODEL_REGISTRY
-#from lightning.pytorch.cli import LightningCLI
+# from pytorch_lightning.utilities.cli import LightningCLI, CALLBACK_REGISTRY, MODEL_REGISTRY
+from pytorch_lightning.cli import LightningCLI
 
 from cvdvae import CVAE
 # from ema import EMA
@@ -100,7 +100,7 @@ class CondVAE(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         loss, kls = self.forward(batch)
         loss = loss.mean()
-        self.log('kl', kls, sync_dist=True)
+        self.log_dict(kls, sync_dist=True)
         self.log('loss', loss, sync_dist=True)
         return loss
 
@@ -109,10 +109,10 @@ class CondVAE(pl.LightningModule):
         y = batch[1]
         xsr = self.sample_images(y, quantize=False)
         lr_rmse = torch.mean((self.resize(xsr) - y)**2) ** 0.5
-        self.log('kl_val', kls)
-        self.log('lr_rmse', lr_rmse)
-        self.log('hp_metric', lr_rmse)
-        self.log('loss_val', loss)
+        self.log_dict(kls)
+        self.log('lr_rmse', lr_rmse, sync_dist=True)
+        self.log('hp_metric', lr_rmse, sync_dist=True)
+        self.log('loss_val', loss, sync_dist=True)
         # don't update the weight if loss is NaN
         if torch.isnan(loss) or torch.isinf(loss):
             return None
@@ -161,7 +161,7 @@ class TensorBoardImageSampler(pl.Callback):
         #self.nrow = x.shape[0]
         self.samples_per_image = samples_per_images
 
-    def on_validation_batch_start(self, trainer, pl_module, batch, batch_idx, dataloader_idx):
+    def on_validation_batch_start(self, trainer, pl_module, batch, batch_idx, dataloader_idx=0):
         if self.x is None:
             #self.x = batch['GT']
             #self.y = batch['LQ']

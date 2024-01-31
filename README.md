@@ -11,6 +11,21 @@ source env/bin/activate
 pip install -r requirements.txt 
 ```
 
+## VDVAE checkpoints
+Download pretrained VDVAE checkpoint:
+```
+mkdir checkpoints
+mkdir checkpoints/vdvae
+cd checkpoints/vdvae
+wget https://openaipublic.blob.core.windows.net/very-deep-vaes-assets/vdvae-assets/ffhq256-iter-1700000-model-ema.th
+```
+
+## Data preparation
+To download ffhq256 dataset and prepare the dataset:
+```
+./prepare_data.sh
+```
+
 ## Training
 The training code is implemented with [pytorch-lightning CLI](https://lightning.ai/docs/pytorch/stable/cli/lightning_cli.html).
 
@@ -24,19 +39,35 @@ To print the default training configuration, run:
 python3 train.py --print_config fit
 ```
 
+To start a training run:
+```
+python3 train.py  fit -c configs/ffhq256_x8_v0.yaml
+```
+
+
+
+
 ## Test
 Download pretrained checkpoints:
-
-Download VDVAE pretrained model:
-
-
+```
+mkdir checkpoints
+cd checkpoints
 
 ```
-python3 sample_sr.py
+
+
+For instance to test the x4 model: 
+```
+python3 sample_sr.py --model_path checkpoints/SR_x4_FFHQ256_bic_000
 ```
 ## Acknowledgements
 
-This code borrow elements from several works
-- The consistency enforcement module (CEM) implementation is 
-- VDVAE implementation
-- Dataset ...
+This code use parts from the following project
+- https://github.com/YuvalBahat/Explorable-Super-Resolution/tree/master/codes
+- https://github.com/openai/vdvae
+
+
+Dataset:
+- https://github.com/NVlabs/ffhq-dataset
+
+Please refer to the associated licenses.
